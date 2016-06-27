@@ -39,6 +39,10 @@ def add_movie():
 def new_movie():
 	return render_template('movies/new.html')
 
+@app.route('/movies/<int:id>/edit')
+def edit_movie(id):
+	movie = Movie.query.get(id)
+	return render_template('movies/edit.html', movie=movie)
 
 @app.route('/movies/<int:id>', methods=["GET"])
 def show_movie(id):
@@ -53,10 +57,13 @@ def update_movie(id):
 	db.session.commit()
 	return redirect(url_for('index_movie'))
 
-@app.route('/movies/<int:id>/edit')
-def edit_movie(id):
-	movie = Movie.query.get(id)
-	return render_template('movies/edit.html', movie=movie)
+@app.route('/movies/<int:id>', methods=["DELETE"])
+def destroy_movie(id):
+	movie = Movie.query.get(id) # what does get_or_404 do?
+	db.session.delete(movie)
+	db.session.commit()
+	return redirect(url_for('index_movie'))
+
 
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);

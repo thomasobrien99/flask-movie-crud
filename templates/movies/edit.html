@@ -5,4 +5,5 @@
 		<input type = "text" name = "title" value = "{{movie.title}}">
 		<input type = "submit">
 	</form>
+	<form action ="{{url_for('destroy_movie', id=movie.id)}}?_method=DELETE" method="POST"><button>Remove Movie</button></form>
 {% endblock %}
