@@ -4,4 +4,5 @@
   {% for movie in movies %}
   	<li>{{movie.title}}</li>
   {% endfor %}
+  <li><a href="{{url_for('new_movie')}}">Add a movie!</a></li>
 {% endblock %}

@@ -27,5 +27,16 @@ def index_movie():
 	movies = Movie.query.all();
 	return render_template('movies/index.html', movies=movies)
 
+@app.route('/movies', methods=["POST"])
+def add_movie():
+	new_movie = Movie(request.form['title'])
+	db.session.add(new_movie)
+	db.session.commit()
+	return redirect(url_for('index_movie'))
+
+@app.route('/movies/new')
+def new_movie():
+	return render_template('movies/new.html')
+
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);
