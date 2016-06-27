@@ -6,6 +6,7 @@ from models.movie import Movie
 
 
 app = Flask(__name__)
+modus = Modus(app)
 
 '''WHAT IS ALL THIS DOING?'''
 
@@ -38,10 +39,24 @@ def add_movie():
 def new_movie():
 	return render_template('movies/new.html')
 
-@app.route('/movies/<int:id>')
+
+@app.route('/movies/<int:id>', methods=["GET"])
 def show_movie(id):
-	movie = Movie.query.get(id)
+	movie = Movie.query.get(id) # IS THIS BUILT IN EXPECTING "ID"?
 	return render_template('movies/show.html', movie=movie)
+
+@app.route('/movies/<int:id>', methods=["PATCH"])
+def update_movie(id):
+	movie = Movie.query.get(id)
+	movie.title = request.form["title"]
+	db.session.add(movie)
+	db.session.commit()
+	return redirect(url_for('index_movie'))
+
+@app.route('/movies/<int:id>/edit')
+def edit_movie(id):
+	movie = Movie.query.get(id)
+	return render_template('movies/edit.html', movie=movie)
 
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);

@@ -5,7 +5,9 @@
   	<li>
   	  {{movie.title}}
   	  <ul>
-  	  	<li><a href = "{{url_for('show_movie', id=movie.id)}}">View</a></li>
+  	  	<li>
+  	  		<a href = "{{url_for('show_movie', id=movie.id)}}">View</a>
+  	  	</li>
   	  </ul>
   	</li>
   {% endfor %}
