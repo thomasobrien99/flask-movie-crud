@@ -2,7 +2,12 @@
 {% block content %}
   <h1>Movie Index Page!</h1>
   {% for movie in movies %}
-  	<li>{{movie.title}}</li>
+  	<li>
+  	  {{movie.title}}
+  	  <ul>
+  	  	<li><a href = "{{url_for('show_movie', id=movie.id)}}">View</a></li>
+  	  </ul>
+  	</li>
   {% endfor %}
   <li><a href="{{url_for('new_movie')}}">Add a movie!</a></li>
 {% endblock %}

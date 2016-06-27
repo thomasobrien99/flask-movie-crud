@@ -38,5 +38,10 @@ def add_movie():
 def new_movie():
 	return render_template('movies/new.html')
 
+@app.route('/movies/<int:id>')
+def show_movie(id):
+	movie = Movie.query.get(id)
+	return render_template('movies/show.html', movie=movie)
+
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);
