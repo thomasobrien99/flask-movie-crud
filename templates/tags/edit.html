@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Tag Edit Page</h1>
+  <form action = "{{url_for('update_tag', id=tag.id)}}?_method=PATCH" method="POST">
+    <input type = "text" name = "name" value = "{{tag.name}}">
+    <input type = "submit">
+  </form>
+  <form action ="{{url_for('destroy_tag', id=tag.id)}}?_method=DELETE" method="POST"><button>Remove Tag</button></form>
+{% endblock %}

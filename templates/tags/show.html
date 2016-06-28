@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Tag Show Page</h1>
+	<li>{{tag.name}}</li>
+	<li><a href="{{url_for('edit_tag', id=tag.id)}}">Edit this Tag</a></li>
+{% endblock %}

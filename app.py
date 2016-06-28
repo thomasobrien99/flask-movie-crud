@@ -2,9 +2,9 @@ from flask import Flask, url_for, request, redirect, render_template
 from flask_modus import Modus
 
 from models.shared import db
-from models.movie import Movie
+from models.tag import Tag
 from models.director import Director
-
+from models.movie import Movie
 
 app = Flask(__name__)
 modus = Modus(app)
@@ -20,7 +20,7 @@ with app.app_context():
 
 @app.route('/')
 def index():
-	return redirect(url_for('index_director'))
+	return render_template('index.html')
 
 
 # Director Routes
@@ -107,6 +107,49 @@ def destroy_movie(id,movie_id):
 	db.session.delete(movie)
 	db.session.commit()
 	return redirect(url_for('index_movie', id=id))
+
+#tag routes
+@app.route('/tags')
+def index_tag():
+	tags = Tag.query.all()
+	return render_template('tags/index.html', tags=tags)
+
+@app.route('/tags', methods=['POST'])
+def create_tag():
+  tag = Tag(request.form["name"])
+  db.session.add(tag)
+  db.session.commit()
+  return redirect(url_for('index_tag'))
+
+@app.route('/tags/new')
+def new_tag():
+	return render_template('tags/new.html')
+
+@app.route('/tags/<int:id>')
+def show_tag(id):
+	tag = Tag.query.get(id)
+	return render_template('tags/show.html', tag=tag)
+
+@app.route('/tags/<int:id>/edit')
+def edit_tag(id):
+	tag = Tag.query.get(id)
+	return render_template('tags/edit.html', tag=tag)
+
+@app.route('/tags/<int:id>', methods=['PATCH'])
+def update_tag(id):
+  tag = Tag.query.get(id)
+  tag.name = request.form['name'];
+  db.session.add(tag)
+  db.session.commit()
+  return redirect(url_for('index_tag'))
+
+@app.route('/tags/<int:id>', methods=['DELETE'])
+def destroy_tag(id): 
+	tag = Tag.query.get(id)
+	db.session.delete(tag)
+	db.session.commit()
+	return redirect(url_for('index_tag'))
+
 
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);

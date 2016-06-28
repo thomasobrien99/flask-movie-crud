@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block content %}
+  <h1>Tag Index Page!</h1>
+  {% for tag in tags %}
+  	<li>
+  	  {{tag.name}}
+  	  <ul>
+  	  	<li>
+  	  		<a href = "{{url_for('show_tag', id=tag.id)}}">View</a>
+  	  	</li>
+  	  </ul>
+  	</li>
+  {% endfor %}
+  <li><a href="{{url_for('new_tag')}}">Add a Tag!</a></li>
+{% endblock %}
