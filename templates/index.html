@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 	<h1>Movie App Index Page</h1>
-	<li>See all <a href = "{{url_for('index_movie')}}">movies!</li>
-<!-- 	<li>See all directors!</li>
-	<li>See all tags!</li> -->
+	<li>See all <a href = "{{url_for('index_movie')}}">movies!</a></li>
+	<li>See all <a href = "{{url_for('index_director')}}">directors!</a></li>
+	<li>See all tags!</li>
 {% endblock %}

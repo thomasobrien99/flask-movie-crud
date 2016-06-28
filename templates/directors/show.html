@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Director Show Page</h1>
+	<li>{{dir.name}}</li>
+	<li><a href="{{url_for('edit_director', id=dir.id)}}">Edit this Director</a></li>
+{% endblock %}

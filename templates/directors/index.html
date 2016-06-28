@@ -1,0 +1,15 @@
+{% extends 'base.html'%}
+{% block content %}
+  <h1>Director Index Page!</h1>
+  {% for dir in dirs %}
+  	<li>
+  	  {{dir.name}}
+  	  <ul>
+  	  	<li>
+  	  		<a href = "{{url_for('show_director', id=dir.id)}}">View</a>
+  	  	</li>
+  	  </ul>
+  	</li>
+  {% endfor %}
+  <li><a href="{{url_for('new_director')}}">Add a Director!</a></li>
+{% endblock %}

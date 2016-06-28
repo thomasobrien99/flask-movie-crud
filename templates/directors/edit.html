@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+	<h1>Directors Edit Page</h1>
+	<form action = "{{url_for('update_director', id=dir.id)}}?_method=PATCH" method="POST">
+		<input type = "text" name = "name" value = "{{dir.name}}">
+		<input type = "submit">
+	</form>
+	<form action ="{{url_for('destroy_director', id=dir.id)}}?_method=DELETE" method="POST"><button>Remove Director</button></form>
+{% endblock %}

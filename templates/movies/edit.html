@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-	<h1>Movie App Edit Page</h1>
+	<h1>Movies Edit Page</h1>
 	<form action = "{{url_for('update_movie', id=movie.id)}}?_method=PATCH" method="POST">
 		<input type = "text" name = "title" value = "{{movie.title}}">
 		<input type = "submit">

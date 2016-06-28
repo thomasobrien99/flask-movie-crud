@@ -3,6 +3,7 @@ from flask_modus import Modus
 
 from models.shared import db
 from models.movie import Movie
+from models.director import Director
 
 
 app = Flask(__name__)
@@ -25,7 +26,7 @@ def index():
 # Movie Routes
 @app.route('/movies')
 def index_movie():
-	movies = Movie.query.all();
+	movies = Movie.query.all()
 	return render_template('movies/index.html', movies=movies)
 
 @app.route('/movies', methods=["POST"])
@@ -64,6 +65,48 @@ def destroy_movie(id):
 	db.session.commit()
 	return redirect(url_for('index_movie'))
 
+
+# Director Routes
+@app.route('/directors', methods=['GET'])
+def index_director():
+	dirs = Director.query.all()
+	return render_template('directors/index.html', dirs=dirs)
+
+@app.route('/directors', methods=['POST'])
+def add_director():
+	new_dir = Director(request.form['name'])
+	db.session.add(new_dir)
+	db.session.commit()
+	return redirect(url_for('index_director'))
+
+@app.route('/directors/new')
+def new_director():
+	return render_template('directors/new.html')
+
+@app.route('/directors/<int:id>')
+def show_director(id):
+	show_dir = Director.query.get(id)
+	return render_template('/directors/show.html', dir=show_dir)
+
+@app.route('/directors/<int:id>/edit')
+def edit_director(id):
+	edit_dir = Director.query.get(id)
+	return render_template('/directors/edit.html', dir=edit_dir)
+
+@app.route('/directors/<int:id>', methods=['PATCH'])
+def update_director(id):
+	update_dir = Director.query.get(id)
+	update_dir.name = request.form['name']
+	db.session.add(update_dir)
+	db.session.commit()
+	return redirect(url_for('index_director'))
+
+@app.route('/directors/<int:id>', methods=['DELETE'])
+def destroy_director(id):
+	delete_dir = Director.query.get(id)
+	db.session.delete(delete_dir)
+	db.session.commit()
+	return redirect(url_for('index_director'))
 
 if __name__ == '__main__':
 	app.run(debug=True, port=3000);
