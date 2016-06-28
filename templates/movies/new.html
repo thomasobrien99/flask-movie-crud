@@ -1,7 +1,7 @@
 {% extends 'base.html'%}
 {% block content %}
-  <h1>Movie New Page!</h1>
-  <form action="{{url_for('index_movie')}}" method="POST">
+  <h1>{{director.name}}'s Movie New Page!</h1>
+  <form action="{{url_for('index_movie', id=director.id)}}" method="POST">
   	<input type="text" name = "title">
   	<input type="submit" value= "Add Movie!">
   </form>

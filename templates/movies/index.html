@@ -1,15 +1,15 @@
 {% extends 'base.html'%}
 {% block content %}
-  <h1>Movie Index Page!</h1>
-  {% for movie in movies %}
+  <h1>{{director.name}}'s Movie Index Page!</h1>
+  {% for movie in director.movies %}
   	<li>
   	  {{movie.title}}
   	  <ul>
   	  	<li>
-  	  		<a href = "{{url_for('show_movie', id=movie.id)}}">View</a>
+  	  		<a href = "{{url_for('show_movie', id=director.id, movie_id=movie.id)}}">View</a>
   	  	</li>
   	  </ul>
   	</li>
   {% endfor %}
-  <li><a href="{{url_for('new_movie')}}">Add a movie!</a></li>
+  <li><a href="{{url_for('new_movie', id = director.id)}}">Add a movie!</a></li>
 {% endblock %}
