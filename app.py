@@ -17,7 +17,9 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 ''' '''
-
+def get_form_tags():
+	form_tag_ids = [int(tag_id) for tag_id in request.form.getlist('tags')]
+	return [tag for tag in Tag.query.all() if tag.id in form_tag_ids]
 @app.route('/')
 def index():
 	return render_template('index.html')
@@ -74,6 +76,7 @@ def index_movie(id):
 @app.route('/directors/<int:id>/movies', methods=["POST"])
 def add_movie(id):
 	new_movie = Movie(request.form['title'], id)
+	new_movie.tags = get_form_tags()
 	db.session.add(new_movie)
 	db.session.commit()
 	return redirect(url_for('index_movie', id=id))
@@ -81,12 +84,14 @@ def add_movie(id):
 @app.route('/directors/<int:id>/movies/new')
 def new_movie(id):
 	director = Director.query.get(id)
-	return render_template('movies/new.html', director=director)
+	tags = Tag.query.all()
+	return render_template('movies/new.html', director=director, tags=tags)
 
 @app.route('/directors/<int:id>/movies/<int:movie_id>/edit')
 def edit_movie(id,movie_id):
 	movie = Movie.query.get(movie_id)
-	return render_template('movies/edit.html', movie=movie)
+	tags = Tag.query.all()
+	return render_template('movies/edit.html', movie=movie, tags=tags)
 
 @app.route('/directors/<int:id>/movies/<int:movie_id>', methods=["GET"])
 def show_movie(id,movie_id):
@@ -97,6 +102,7 @@ def show_movie(id,movie_id):
 def update_movie(id,movie_id):
 	movie = Movie.query.get(movie_id)
 	movie.title = request.form["title"]
+	movie.tags = get_form_tags()
 	db.session.add(movie)
 	db.session.commit()
 	return redirect(url_for('index_movie', id=id))

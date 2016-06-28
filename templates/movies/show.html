@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
 {% block content %}
 	<h1>Movie Show Page</h1>
-	<li>{{movie.title}}</li>
+	<li>{{movie.title}}
+		<ul>
+			{% for tag in movie.tags %}
+			<li>
+				{{tag.name}}
+			</li>
+			{% endfor %}
+		</ul>
+	</li>
 	<li><a href="{{url_for('edit_movie', id=movie.director_id, movie_id=movie.id)}}">Edit this Movie</a></li>
 {% endblock %}

@@ -3,6 +3,13 @@
 	<h1>Movies Edit Page</h1>
 	<form action = "{{url_for('update_movie', id=movie.director_id, movie_id=movie.id)}}?_method=PATCH" method="POST">
 		<input type = "text" name = "title" value = "{{movie.title}}">
+		{% for tag in tags %}
+  	  <label>
+  	  	<input type = "checkbox" name="tags" value="{{ tag.id }}"
+  	  	{% if tag in movie.tags %} checked {% endif %}>
+  	  	{{ tag.name }}
+  	  </label>
+  	{% endfor %}
 		<input type = "submit">
 	</form>
 	<form action ="{{url_for('destroy_movie', id=movie.director_id, movie_id=movie.id)}}?_method=DELETE" method="POST"><button>Remove Movie</button></form>
